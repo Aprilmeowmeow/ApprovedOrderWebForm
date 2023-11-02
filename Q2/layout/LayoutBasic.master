@@ -1,0 +1,61 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="LayoutBasic.master.cs" Inherits="Q2.Web.UI.Layouts.LayoutBasic" %>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<!DOCTYPE html>
+<html>
+<head id="Page_Head" runat="server">
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Heptarun.com" />
+    <meta name="author" content="Heptarun.com" />
+    <link rel="shortcut icon" href="../res/images/ico/icon-128.ico" />
+    <title id="Page_Title" runat="server">Test Site</title>
+
+    <!-- Bootstrap CSS -->
+    <!-- 3.1.1 - dist -->
+    <link href="../res/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../res/dist_plugin/css/multi-level.css" rel="stylesheet" />
+
+    <!-- Pines Notify -->
+    <script type="text/javascript" src="../../res/js/jquery.js"></script>
+    <script type="text/javascript" src="../../res/pnotify/pnotify.custom.min.js"></script>
+    <link rel="stylesheet" href="../res/pnotify/pnotify.custom.min.css" />
+    <link rel="stylesheet" href="../res/pnotify/pnotify.custom.plus.css" />
+
+
+    <style type="text/css">
+        body {
+            margin: 0px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: none;
+            }
+
+        .p-notify-addcls {
+            z-index: 99999;
+        }
+    </style>
+
+
+    <asp:ContentPlaceHolder ID="ResourcePlaceHolder" runat="server" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ContentPlaceHolder ID="FormPlaceHolder1" runat="server" />
+    </form>
+    <asp:ContentPlaceHolder ID="FooterPlaceHolder1" runat="server" />
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../../res/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

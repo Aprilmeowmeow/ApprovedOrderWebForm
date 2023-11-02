@@ -1,0 +1,48 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/layout/LayoutBasic.master" AutoEventWireup="true" CodeFile="Layout_ExtNetTpl.master.cs" Inherits="Q2.Web.UI.Layouts.Layout_ExtNetTpl" %>
+
+<asp:Content ID="ResourceContent1" ContentPlaceHolderID="ResourcePlaceHolder" runat="Server">
+
+
+    <script type="text/javascript">
+
+
+        var setTitle = function (value) {
+
+            $(document).attr("title", value);
+
+        };
+
+    </script>
+
+    <asp:ContentPlaceHolder ID="ResourcePlaceHolder" runat="server" />
+</asp:Content>
+
+<asp:Content ID="FormContent1" ContentPlaceHolderID="FormPlaceHolder1" runat="Server">
+    <ext:ResourceManager ID="MainResourceManager" runat="server" IDMode="Static" Namespace="" />
+    <asp:ContentPlaceHolder ID="StorePlaceHolder" runat="server">
+        <!-- here put ext.store -->
+    </asp:ContentPlaceHolder>
+    <ext:Viewport ID="MainViewport" runat="server" Layout="CardLayout" BodyBorder="0" Border="false">
+        <Items>
+            <ext:Panel ID="MainPanel" runat="server" Layout="BorderLayout" BodyBorder="0" Border="false">
+                <Content>
+                    <ext:Panel ID="NorthPanel" runat="server" Region="North" BodyBorder="0" Border="false">
+                        <Content>
+                            <asp:ContentPlaceHolder ID="NorthPlaceHolder1" runat="server" />
+                        </Content>
+                    </ext:Panel>
+                    <ext:Panel ID="CenterPanel" runat="server" Region="Center" BodyBorder="0" Border="false" Layout="FitLayout">
+                        <Content>
+                            <asp:ContentPlaceHolder ID="CenterPlaceHolder1" runat="server" />
+                        </Content>
+                    </ext:Panel>
+                </Content>
+            </ext:Panel>
+        </Items>
+    </ext:Viewport>
+</asp:Content>
+
+<asp:Content ID="FooterContent1" ContentPlaceHolderID="FooterPlaceHolder1" runat="Server">
+    <asp:ContentPlaceHolder ID="FooterPlaceHolder1" runat="server" />
+</asp:Content>
+
