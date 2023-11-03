@@ -1,8 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout/Layout_ExtNetTpl.master" AutoEventWireup="true" CodeFile="P1.aspx.cs" Inherits="Q2.Web.UI.P1" %>
 
 <%@ Register Assembly="Ext.Net" Namespace="Ext.Net" TagPrefix="ext" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="ResourcePlaceHolder" runat="Server" >
-    
+<asp:Content ID="Content1" ContentPlaceHolderID="ResourcePlaceHolder" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StorePlaceHolder" runat="Server">
     <style type="text/css">
@@ -11,16 +10,6 @@
             opacity: 0.6;
         }
     </style>
-    <ext:Store ID="Store1" runat="server" IDMode="Static">
-        <Model>
-            <ext:Model runat="server" IDProperty="ID">
-                <Fields>
-                    <ext:ModelField Name="UserID" Type="String" />
-                    <ext:ModelField Name="Enable" Type="int" />                    
-                </Fields>
-            </ext:Model>
-        </Model>
-    </ext:Store>
     <ext:Store ID="MainStore" runat="server" IDMode="Static">
         <Model>
             <ext:Model runat="server" IDProperty="ID">
@@ -32,25 +21,100 @@
                     <ext:ModelField Name="Order_Date" Type="Date" />
                     <ext:ModelField Name="Sales_Name" Type="String" />
                     <ext:ModelField Name="Approved_Date" Type="Date" />
+                    <ext:ModelField Name="Enable" Type="Int" />
+                </Fields>
+            </ext:Model>
+        </Model>
+    </ext:Store>
+    <ext:Store ID="Store1" runat="server" IDMode="Static">
+        <Model>
+            <ext:Model runat="server" IDProperty="ID">
+                <Fields>
+                    <ext:ModelField Name="ID" Type="String" />
+                    <ext:ModelField Name="Enable" Type="Int" />
                 </Fields>
             </ext:Model>
         </Model>
     </ext:Store>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CenterPlaceHolder1" runat="Server">
+    <ext:Window runat="server" ID="window1" Icon="Cog" Hidden="true"
+        Collapsible="true" Constrain="true" MinHeight="400" MinWidth="500" Modal="true"
+        CloseAction="Hide" BodyPaddingSummary="10" Layout="FitLayout">
+        <Buttons>
+            <ext:Button runat="server" ID="Button2" Text="Save">
+                <DirectEvents>
+                    <Click OnEvent="SaveCust"
+                        Success="approvedSuccess"
+                        Failure="approvedFailure">
+                        <EventMask ShowMask="true" Target="Page" Msg="Store ing..." />
+                        <ExtraParams>
+                            <ext:Parameter Name="model" Mode="Raw"
+                                Value="#{Grid1}.getRowsValues({selectedOnly:true})" />
+                        </ExtraParams>
+                    </Click>
+                </DirectEvents>
+            </ext:Button>
+            <ext:Button runat="server" ID="btnMainCancel" Text="Cancel">
+                <Listeners>
+                    <Click Handler="#{window1}.close();" />
+                </Listeners>
+            </ext:Button>
+        </Buttons>
+        <Items>
+            <ext:FormPanel
+                ID="CustForm"
+                runat="server"
+                Icon="Book"
+                Frame="true"
+                LabelAlign="Right"
+                Title="Customer -- All fields are required">
+                <FieldDefaults LabelAlign="Right" AllowBlank="false" />
+                <Items>
+                    <ext:GridPanel
+                        ID="Grid1"
+                        runat="server"
+                        Title="Company Data"
+                        ColumnWidth="0.6"
+                        Height="400"
+                        StoreID="Store1">
+                        <ColumnModel runat="server">
+                            <Columns>
+                                <ext:Column runat="server" Text="Customer" Width="75" DataIndex="ID">
+                                </ext:Column>
+                                <ext:Column runat="server" Text="Enable" Width="75" DataIndex="Enable">
+                                    <Editor>
+                                        <ext:NumberField runat="server" MaxValue="1" MinValue="0" />
+                                    </Editor>
+                                </ext:Column>
+                            </Columns>
+                        </ColumnModel>
+                        <SelectionModel>
+                            <ext:RowSelectionModel runat="server" />
+                        </SelectionModel>
+                        <Plugins>
+                            <ext:CellEditing runat="server" ClicksToEdit="1" />
+                        </Plugins>
 
-    <ext:Panel ID="Panel1" Title="Approve Order" runat="server" BodyBorder="0" Layout="FitLayout">
-        <Items>
-            <ext:GridPanel ID="UserGrid" runat="server">
-                <ColumnModel>
-                    <Columns>
-                        <ext:Column runat="server" ID="userID" Text="User" DataIndex="UserID" Width="120" Locked="true"/>
-                    </Columns>
-                </ColumnModel>
-            </ext:GridPanel>
+                    </ext:GridPanel>
+                </Items>
+            </ext:FormPanel>
         </Items>
+    </ext:Window>
+    <ext:Panel ID="Panel2" Title="Approve Order" runat="server" BodyBorder="0" Layout="FitLayout">
         <Items>
-            <ext:GridPanel ID="MainGrid" runat="server" StoreID="MainStore" MultiSelect="true">                
+            <ext:GridPanel ID="MainGrid" runat="server" StoreID="MainStore" MultiSelect="true">
+                <DockedItems>
+                        <ext:Toolbar runat="server" Dock="Top">
+                            <Items>
+                                <ext:Button runat="server" ID="Button3" Icon="Cog" ToolTip="Set Enable">
+                                    <Listeners>
+                                        <Click Fn="setCustEnable" />
+                                    </Listeners>
+                                </ext:Button>
+                            </Items>
+                        </ext:Toolbar>
+                    </DockedItems>  
                 <ColumnModel>
                     <Columns>
                         <ext:CommandColumn runat="server" ID="approved" Width="30" Locked="true" Sortable="false">
@@ -71,6 +135,9 @@
                         <ext:DateColumn runat="server" ID="colODate" Text="Date" DataIndex="Order_Date" Width="100" Lockable="false" Format="Y-m-dd" Align="Center" />
                         <ext:Column runat="server" ID="colSalesName" Text="Sales" DataIndex="Sales_Name" Width="80" Lockable="false" />
                         <ext:DateColumn runat="server" ID="colAprDate" Text="ApprovedDate" DataIndex="Approved_Date" Width="100" Lockable="false" Format="Y-m-dd" Align="Center" />
+                        <ext:Column runat="server" ID="colEnable" Text="Enable" DataIndex="Enable" Width="80" Locked="true">
+                            <Renderer Fn="onEnable_Renderer" />
+                        </ext:Column>
                     </Columns>
                 </ColumnModel>
                 <BottomBar>
@@ -89,7 +156,7 @@
                     </ext:PagingToolbar>
                 </BottomBar>
                 <SelectionModel>
-                    <ext:CheckboxSelectionModel runat="server" Mode="Multi" InjectCheckbox="0">
+                    <ext:CheckboxSelectionModel runat="server" Mode="Multi" InjectCheckbox="0" CheckOnly="true">
                         <Renderer Fn="hide" />
                     </ext:CheckboxSelectionModel>
                 </SelectionModel>
@@ -101,9 +168,15 @@
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="FooterPlaceHolder1" runat="Server">
     <script>
+       
+        var setCustEnable = function (sender, e) {
+            window1.setTitle('Set Customer');
+            window1.show(sender);
+        };
+
         var prepareToolbar = function (grid, toolbar, rowIndex, record) {
 
-            if (record.data.Status == 5) {
+            if (record.data.Status == 5 || record.data.Enable === 0) {
                 toolbar.items.items[0].hide();
             }
         };
@@ -111,8 +184,8 @@
             metaData.tdCls = Ext.baseCSSPrefix + 'grid-cell-special';
             var cbClass = Ext.baseCSSPrefix + 'grid-row-checker';
             var retval = '<div class="' + cbClass + '"';
-            if (record.data.Status === 5) {
-                retval = retval + 'style="background-position: 0 0px; opacity: 0.3"';
+            if (record.data.Status === 5 || record.data.Enable === 0) {
+                return "";
             }
             retval = retval + '></div>';
             return retval;
@@ -131,37 +204,8 @@
             }
 
         };
-        var show = function () {
-            var grid = MainGrid,
-                sm = MainGrid.getSelectionModel();
-
-            if (sm.injectCheckbox === false) {
-                sm.injectCheckbox = 0;
-                sm.addCheckbox(grid.getView());
-            } else {
-                grid.getView().headerCt.items.getAt(0).show();
-            }
-        };
-        var showFunction = function () {
-
-            MainGrid.getSelectionModel().addCheckbox(grid.getView());
-            MainGrid.columnManager.headerCt.getGridColumns()[0].show();
-            var menu = grid.headerCt.getMenu();
-            var menuItem = menu.add({
-                text: 'Hide Checkbox',
-                handler: hideFunction
-            });
-        };
-
-        var hideFunction = function () {
-            MainGrid.columnManager.headerCt.getGridColumns()[0].hide();
-            var menu = grid.headerCt.getMenu();
-            var menuItem = menu.add({
-                text: 'Show Checkbox',
-                handler: showFunction
-            });
-
-        };
+        
+        
         var setApprove = function (record) {
             Ext.net.DirectMethods.ExecuteApprove(record.get("ID"), {
                 success: function (result) {
@@ -179,8 +223,9 @@
             Ext.Msg.notify("tip", "Save Success");
         }
 
-        var approvedFailure = function (result) {
-            Ext.Msg.alert("Failure", result.errorMsg);
+        var approvedFailure = function(response, result,
+            control, type, action, extraParams) {
+            Ext.Msg.alert("Failure", result.errorMessage);
         }
 
         var onStatus_Renderer = function (value, meta, record, rowindex, colindex) {
@@ -195,6 +240,15 @@
                 case 5: v = "Approved"; break;
             }
 
+            return v;
+        };
+        var onEnable_Renderer = function (value, meta, record, rowindex, colindex) {
+            var v = value;
+
+            switch (v) {
+                case 0: v = "Unable"; break;
+                case 1: v = "Enable"; break;
+            }
             return v;
         };
     </script>

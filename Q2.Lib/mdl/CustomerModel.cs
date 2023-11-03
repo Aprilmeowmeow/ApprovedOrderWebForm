@@ -21,6 +21,7 @@ namespace Q2.Lib
         }
     }
 
+    
 
     [Serializable()]
     public partial class CustomerModelCollection : Collection<CustomerModel>

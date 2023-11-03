@@ -19,3 +19,4 @@ C:\Users\user\Desktop\新增資料夾\練習\Q2_Package\Q2.Lib\obj\Debug\Q2.Lib.
 C:\Users\user\Desktop\新增資料夾\練習\Q2_Package\Q2.Lib\obj\Debug\Q2.Lib.csproj.CopyComplete
 C:\Users\user\Desktop\新增資料夾\練習\Q2_Package\Q2.Lib\obj\Debug\Q2.Lib.dll
 C:\Users\user\Desktop\新增資料夾\練習\Q2_Package\Q2.Lib\obj\Debug\Q2.Lib.pdb
+C:\Users\user\Desktop\新增資料夾\練習\Q2_Package\Q2.Lib\bin\Debug\Newtonsoft.Json.dll

@@ -23,6 +23,5 @@ namespace Q2.Lib
             this.DAO.AddParameter("ApprovedDate", approvedDate); 
             return this.DAO.ExecuteNonQuery();
         }
-
     }
 }

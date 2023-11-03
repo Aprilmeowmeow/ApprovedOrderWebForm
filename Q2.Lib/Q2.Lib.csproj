@@ -33,6 +33,7 @@
     <Reference Include="CAP.Core">
       <HintPath>..\..\..\Web\Heptarun\CAP.Core\bin\Debug\CAP.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustEnable.cs" />
     <Compile Include="entities\Customer.cs" />
     <Compile Include="CustomerContext.cs" />
     <Compile Include="entities\User.cs" />
