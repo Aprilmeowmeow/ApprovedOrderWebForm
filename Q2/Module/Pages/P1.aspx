@@ -38,11 +38,11 @@
     </ext:Store>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CenterPlaceHolder1" runat="Server">
-    <ext:Window runat="server" ID="window1" Icon="Cog" Hidden="true"
+    <ext:Window runat="server" ID="setCustWindow" Icon="Cog" Hidden="true"
         Collapsible="true" Constrain="true" MinHeight="400" MinWidth="500" Modal="true"
         CloseAction="Hide" BodyPaddingSummary="10" Layout="FitLayout">
         <Buttons>
-            <ext:Button runat="server" ID="Button2" Text="Save">
+            <ext:Button runat="server" ID="SaveCustBtn" Text="Save">
                 <DirectEvents>
                     <Click OnEvent="SaveCust"
                         Success="approvedSuccess"
@@ -50,14 +50,14 @@
                         <EventMask ShowMask="true" Target="Page" Msg="Store ing..." />
                         <ExtraParams>
                             <ext:Parameter Name="model" Mode="Raw"
-                                Value="#{Grid1}.getRowsValues({selectedOnly:true})" />
+                                Value="#{SetCustGrid}.getRowsValues({selectedOnly:true})" />
                         </ExtraParams>
                     </Click>
                 </DirectEvents>
             </ext:Button>
-            <ext:Button runat="server" ID="btnMainCancel" Text="Cancel">
+            <ext:Button runat="server" ID="CancelBtn" Text="Cancel">
                 <Listeners>
-                    <Click Handler="#{window1}.close();" />
+                    <Click Handler="#{setCustWindow}.close();" />
                 </Listeners>
             </ext:Button>
         </Buttons>
@@ -72,7 +72,7 @@
                 <FieldDefaults LabelAlign="Right" AllowBlank="false" />
                 <Items>
                     <ext:GridPanel
-                        ID="Grid1"
+                        ID="SetCustGrid"
                         runat="server"
                         Title="Company Data"
                         ColumnWidth="0.6"
@@ -101,20 +101,20 @@
             </ext:FormPanel>
         </Items>
     </ext:Window>
-    <ext:Panel ID="Panel2" Title="Approve Order" runat="server" BodyBorder="0" Layout="FitLayout">
+    <ext:Panel ID="ApprovePanel" Title="Approve Order" runat="server" BodyBorder="0" Layout="FitLayout">
         <Items>
             <ext:GridPanel ID="MainGrid" runat="server" StoreID="MainStore" MultiSelect="true">
                 <DockedItems>
                         <ext:Toolbar runat="server" Dock="Top">
                             <Items>
-                                <ext:Button runat="server" ID="Button3" Icon="Cog" ToolTip="Set Enable">
+                                <ext:Button runat="server" ID="SetCustBtn" Icon="Cog" ToolTip="Set Enable">
                                     <Listeners>
                                         <Click Fn="setCustEnable" />
                                     </Listeners>
                                 </ext:Button>
                                 <ext:Button ID="SubmitBtn" runat="server" Text="Submit Selected Orders" StandOut="true">
                                 <DirectEvents>
-                                    <Click OnEvent="Button1_Click"
+                                    <Click OnEvent="SubmitBtnClick"
                                         Success="approvedSuccess"
                                         Failure="approvedFailure">
                                         <EventMask ShowMask="true" />
@@ -171,8 +171,8 @@
     <script>
        
         var setCustEnable = function (sender, e) {
-            window1.setTitle('Set Customer');
-            window1.show(sender);
+            setCustWindow.setTitle('Set Customer');
+            setCustWindow.show(sender);
         };
 
         var prepareToolbar = function (grid, toolbar, rowIndex, record) {
