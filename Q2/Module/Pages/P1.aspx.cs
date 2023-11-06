@@ -108,7 +108,7 @@ namespace Q2.Web.UI
             }
         }
 
-        protected void Button1_Click(object sender, DirectEventArgs e)
+        protected void SubmitBtnClick(object sender, DirectEventArgs e)
         {
             StringBuilder result = new StringBuilder();
             string ids = string.Empty;

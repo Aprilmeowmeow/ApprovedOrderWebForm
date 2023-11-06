@@ -112,6 +112,15 @@
                                         <Click Fn="setCustEnable" />
                                     </Listeners>
                                 </ext:Button>
+                                <ext:Button ID="SubmitBtn" runat="server" Text="Submit Selected Orders" StandOut="true">
+                                <DirectEvents>
+                                    <Click OnEvent="Button1_Click"
+                                        Success="approvedSuccess"
+                                        Failure="approvedFailure">
+                                        <EventMask ShowMask="true" />
+                                    </Click>
+                                </DirectEvents>
+                            </ext:Button>
                             </Items>
                         </ext:Toolbar>
                     </DockedItems>  
@@ -143,15 +152,7 @@
                 <BottomBar>
                     <ext:PagingToolbar runat="server" DisplayInfo="false" HideRefresh="true">
                         <Items>
-                            <ext:Button ID="Button1" runat="server" Text="Submit Selected Records" StandOut="true">
-                                <DirectEvents>
-                                    <Click OnEvent="Button1_Click"
-                                        Success="approvedSuccess"
-                                        Failure="approvedFailure">
-                                        <EventMask ShowMask="true" />
-                                    </Click>
-                                </DirectEvents>
-                            </ext:Button>
+                            
                         </Items>
                     </ext:PagingToolbar>
                 </BottomBar>
