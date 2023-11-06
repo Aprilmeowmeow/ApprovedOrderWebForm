@@ -210,7 +210,6 @@
             Ext.net.DirectMethods.ExecuteApprove(record.get("ID"), {
                 success: function (result) {
                     //Ext.msg.alert(result);
-                    MainGrid.getStore().reload();
                     Ext.Msg.alert("tip", "Save Success");
                 },
                 failure: function (errorMsg) {
