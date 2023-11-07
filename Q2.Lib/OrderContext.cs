@@ -1,9 +1,10 @@
 using System;
-using System.ComponentModel;
 using System.Data;
-using Yos.Studio.ORM;
-using Yos.Studio.ORM.Extensions;
 using CAP.Core;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Contexts;
+using System.Data.SqlClient;
 
 namespace Q2.Lib
 {
@@ -23,5 +24,18 @@ namespace Q2.Lib
             this.DAO.AddParameter("ApprovedDate", approvedDate); 
             return this.DAO.ExecuteNonQuery();
         }
+       
+        public DataTable GetCustEnable()
+        {
+            var query = @"SELECT [Customer].[Enable], [Order].[ID], [Order].[Customer_ID], [Order].[TotalAmount], [Order].Status,
+            [Order].[Order_Date], [Order].[Sales_Name], [Order].[Approved_Date]
+            FROM [Order] INNER JOIN[Customer] ON Customer.ID = [Order].Customer_ID";
+            this.DAO.CommandText = query;
+            this.DAO.CommandType = CommandType.Text;
+            this.DAO.ClearParameters();
+            var data = this.DAO.GetDataTable();
+            return data;
+        }
     }
 }
+

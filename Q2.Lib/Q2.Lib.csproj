@@ -54,6 +54,7 @@
     <Compile Include="CustEnable.cs" />
     <Compile Include="entities\Customer.cs" />
     <Compile Include="CustomerContext.cs" />
+    <Compile Include="entities\ApprovedOrder.cs" />
     <Compile Include="mdl\CustomerModel.cs" />
     <Compile Include="entities\Order.cs" />
     <Compile Include="OrderContext.cs" />

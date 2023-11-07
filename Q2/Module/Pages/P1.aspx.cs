@@ -39,47 +39,42 @@ namespace Q2.Web.UI
             List<ApprovedOrder> ar = new List<ApprovedOrder>();
             using (Q2.Lib.OrderContext order = new Q2.Lib.OrderContext())
             {
-                using (Q2.Lib.CustomerContext cust = new Q2.Lib.CustomerContext())
-                {
-                    var customers= cust.Maintain.RetrieveCollection(" ID != '0'").ToList();
-                    Store1.DataSource = customers;
-                    Store1.DataBind();
-                    
-                    var orders = order.Maintain.RetrieveCollection(" Status > 0 ").ToList();
-                    
-                    foreach (var o in orders)
-                    {
-
-                        ar.Add(new ApprovedOrder()
-                        {
-                            ID = o.ID,
-                            Customer_ID = o.Customer_ID,
-                            TotalAmount = o.TotalAmount,
-                            Status = o.Status,
-                            Order_Date = o.Order_Date,
-                            Sales_Name = o.Sales_Name,
-                            Approved_Date = o.Approved_Date,
-                            Enable = (from customer in customers where customer.ID == o.Customer_ID select customer.Enable).FirstOrDefault()
-                        }); 
-                    }
-                    MainStore.DataSource = ar;
-                    MainStore.DataBind();
-                }
-                
+                MainStore.DataSource = order.GetCustEnable();
+                MainStore.DataBind();
             }
-           
+            using (Q2.Lib.CustomerContext customer = new CustomerContext())
+            {
+                Store1.DataSource = customer.Maintain.RetrieveCollection("ID != '0'").ToList();
+                Store1.DataBind();
+            }
+                //using (Q2.Lib.CustomerContext cust = new Q2.Lib.CustomerContext())
+                //{
+                //    var customers= cust.Maintain.RetrieveCollection(" ID != '0'").ToList();
+                //    Store1.DataSource = customers;
+                //    Store1.DataBind();
+                    
+                //    var orders = order.Maintain.RetrieveCollection(" Status > 0 ").ToList();
+                    
+                //    foreach (var o in orders)
+                //    {
+
+                //        ar.Add(new ApprovedOrder()
+                //        {
+                //            ID = o.ID,
+                //            Customer_ID = o.Customer_ID,
+                //            TotalAmount = o.TotalAmount,
+                //            Status = o.Status,
+                //            Order_Date = o.Order_Date,
+                //            Sales_Name = o.Sales_Name,
+                //            Approved_Date = o.Approved_Date,
+                //            Enable = (from customer in customers where customer.ID == o.Customer_ID select customer.Enable).FirstOrDefault()
+                //        }) ; 
+                //    }
+                //    MainStore.DataSource = ar;
+                //    MainStore.DataBind();
+                //}
         }
-        public class ApprovedOrder
-        {
-            public string ID { get; set; }
-            public String Customer_ID { get; set; }
-            public Decimal TotalAmount { get; set; }
-            public Int32 Status { get; set; }
-            public DateTime Order_Date { get; set; }
-            public String Sales_Name { get; set; }
-            public DateTime Approved_Date { get; set; }
-            public int Enable { get; set; }
-        }
+        
       
         protected void SaveCust(object sender, DirectEventArgs e)
         {
