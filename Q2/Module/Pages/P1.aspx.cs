@@ -87,11 +87,11 @@ namespace Q2.Web.UI
                     e.Success = false;
                 }
                 else
-                    e.Success = UpdateEnable(m.ID, (int)m.Enable);
+                    e.Success = UpdateEnable(m.ID, m.Enable);
             }
         }
 
-        private bool UpdateEnable(string id, int enable)
+        private bool UpdateEnable(string id, bool enable)
         {
             if(id == null)
             {

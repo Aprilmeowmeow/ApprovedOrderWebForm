@@ -23,7 +23,7 @@ namespace Q2.Lib
         public DateTime Order_Date { get; set; }
         public String Sales_Name { get; set; }
         public DateTime Approved_Date { get; set; }
-        public int Enable { get; set; }
+        public bool Enable { get; set; }
 
     }
 }

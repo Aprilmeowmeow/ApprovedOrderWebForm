@@ -66,8 +66,8 @@ namespace Q2.Lib
         [YosDPS(DbType.Int32, FieldName = "Status", Size = 4)]
         public Int32? Status { get; set; }
 
-        [YosDPS(DbType.Int32, FieldName = "Enable", Size = 4)]
-        public int Enable { get; set; }
+        [YosDPS(DbType.Boolean, FieldName = "Enable", Size = 4)]
+        public bool Enable { get; set; }
 
     }
 }

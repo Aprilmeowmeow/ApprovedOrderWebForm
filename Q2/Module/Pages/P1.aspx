@@ -21,7 +21,7 @@
                     <ext:ModelField Name="Order_Date" Type="Date" />
                     <ext:ModelField Name="Sales_Name" Type="String" />
                     <ext:ModelField Name="Approved_Date" Type="Date" />
-                    <ext:ModelField Name="Enable" Type="Int" />
+                    <ext:ModelField Name="Enable" Type="Boolean" />
                 </Fields>
             </ext:Model>
         </Model>
@@ -31,7 +31,7 @@
             <ext:Model runat="server" IDProperty="ID">
                 <Fields>
                     <ext:ModelField Name="ID" Type="String" />
-                    <ext:ModelField Name="Enable" Type="Int" />
+                    <ext:ModelField Name="Enable" Type="Boolean" />
                 </Fields>
             </ext:Model>
         </Model>
@@ -50,7 +50,7 @@
                         <EventMask ShowMask="true" Target="Page" Msg="Store ing..." />
                         <ExtraParams>
                             <ext:Parameter Name="model" Mode="Raw"
-                                Value="#{SetCustGrid}.getRowsValues({selectedOnly:true})" />
+                                Value="#{SetCustGrid}.getRowsValues()" />
                         </ExtraParams>
                     </Click>
                 </DirectEvents>
@@ -82,20 +82,12 @@
                             <Columns>
                                 <ext:Column runat="server" Text="Customer" Width="75" DataIndex="ID">
                                 </ext:Column>
-                                <ext:Column runat="server" Text="Enable" Width="75" DataIndex="Enable">
-                                    <Editor>
-                                        <ext:NumberField runat="server" MaxValue="1" MinValue="0" />
-                                    </Editor>
-                                </ext:Column>
+                                <ext:CheckColumn runat="server" Text="Enable" Width="75" DataIndex="Enable" Editable="true" />
                             </Columns>
                         </ColumnModel>
-                        <SelectionModel>
-                            <ext:RowSelectionModel runat="server" />
-                        </SelectionModel>
                         <Plugins>
                             <ext:CellEditing runat="server" ClicksToEdit="1" />
                         </Plugins>
-
                     </ext:GridPanel>
                 </Items>
             </ext:FormPanel>
@@ -105,14 +97,14 @@
         <Items>
             <ext:GridPanel ID="MainGrid" runat="server" StoreID="MainStore" MultiSelect="true">
                 <DockedItems>
-                        <ext:Toolbar runat="server" Dock="Top">
-                            <Items>
-                                <ext:Button runat="server" ID="SetCustBtn" Icon="Cog" ToolTip="Set Enable">
-                                    <Listeners>
-                                        <Click Fn="setCustEnable" />
-                                    </Listeners>
-                                </ext:Button>
-                                <ext:Button ID="SubmitBtn" runat="server" Text="Submit Selected Orders" StandOut="true">
+                    <ext:Toolbar runat="server" Dock="Top">
+                        <Items>
+                            <ext:Button runat="server" ID="SetCustBtn" Icon="Cog" ToolTip="Set Enable">
+                                <Listeners>
+                                    <Click Fn="setCustEnable" />
+                                </Listeners>
+                            </ext:Button>
+                            <ext:Button ID="SubmitBtn" runat="server" Text="Submit Selected Orders" StandOut="true">
                                 <DirectEvents>
                                     <Click OnEvent="SubmitBtnClick"
                                         Success="approvedSuccess"
@@ -121,9 +113,9 @@
                                     </Click>
                                 </DirectEvents>
                             </ext:Button>
-                            </Items>
-                        </ext:Toolbar>
-                    </DockedItems>  
+                        </Items>
+                    </ext:Toolbar>
+                </DockedItems>
                 <ColumnModel>
                     <Columns>
                         <ext:CommandColumn runat="server" ID="approved" Width="30" Locked="true" Sortable="false">
@@ -152,7 +144,6 @@
                 <BottomBar>
                     <ext:PagingToolbar runat="server" DisplayInfo="false" HideRefresh="true">
                         <Items>
-                            
                         </Items>
                     </ext:PagingToolbar>
                 </BottomBar>
@@ -169,7 +160,7 @@
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="FooterPlaceHolder1" runat="Server">
     <script>
-       
+
         var setCustEnable = function (sender, e) {
             setCustWindow.setTitle('Set Customer');
             setCustWindow.show(sender);
@@ -205,8 +196,8 @@
             }
 
         };
-        
-        
+
+
         var setApprove = function (record) {
             Ext.net.DirectMethods.ExecuteApprove(record.get("ID"), {
                 success: function (result) {
@@ -223,7 +214,7 @@
             Ext.Msg.notify("tip", "Save Success");
         }
 
-        var approvedFailure = function(response, result,
+        var approvedFailure = function (response, result,
             control, type, action, extraParams) {
             Ext.Msg.alert("Failure", result.errorMessage);
         }
