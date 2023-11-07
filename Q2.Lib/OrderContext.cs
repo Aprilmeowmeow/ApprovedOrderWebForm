@@ -1,10 +1,6 @@
 using System;
 using System.Data;
 using CAP.Core;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Data.SqlClient;
 
 namespace Q2.Lib
 {
@@ -25,7 +21,7 @@ namespace Q2.Lib
             return this.DAO.ExecuteNonQuery();
         }
        
-        public DataTable GetCustEnable()
+        public DataTable GetApproveOrder()
         {
             var query = @"SELECT [Customer].[Enable], [Order].[ID], [Order].[Customer_ID], [Order].[TotalAmount], [Order].Status,
             [Order].[Order_Date], [Order].[Sales_Name], [Order].[Approved_Date]

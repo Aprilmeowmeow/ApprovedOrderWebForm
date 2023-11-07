@@ -1,6 +1,4 @@
 using System;
-using System.ComponentModel;
-using System.Data;
 using Yos.Studio.ORM;
 
 namespace Q2.Lib
