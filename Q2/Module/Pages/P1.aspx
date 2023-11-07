@@ -136,9 +136,7 @@
                         <ext:DateColumn runat="server" ID="colODate" Text="Date" DataIndex="Order_Date" Width="100" Lockable="false" Format="Y-m-dd" Align="Center" />
                         <ext:Column runat="server" ID="colSalesName" Text="Sales" DataIndex="Sales_Name" Width="80" Lockable="false" />
                         <ext:DateColumn runat="server" ID="colAprDate" Text="ApprovedDate" DataIndex="Approved_Date" Width="100" Lockable="false" Format="Y-m-dd" Align="Center" />
-                        <ext:Column runat="server" ID="colEnable" Text="Enable" DataIndex="Enable" Width="80" Locked="true">
-                            <Renderer Fn="onEnable_Renderer" />
-                        </ext:Column>
+                        <ext:Column runat="server" ID="colEnable" Text="Enable" DataIndex="Enable" Width="80" Locked="true" />
                     </Columns>
                 </ColumnModel>
                 <BottomBar>
@@ -168,7 +166,7 @@
 
         var prepareToolbar = function (grid, toolbar, rowIndex, record) {
 
-            if (record.data.Status == 5 || record.data.Enable === 0) {
+            if (record.data.Status == 5 || record.data.Enable === false) {
                 toolbar.items.items[0].hide();
             }
         };
@@ -176,7 +174,7 @@
             metaData.tdCls = Ext.baseCSSPrefix + 'grid-cell-special';
             var cbClass = Ext.baseCSSPrefix + 'grid-row-checker';
             var retval = '<div class="' + cbClass + '"';
-            if (record.data.Status === 5 || record.data.Enable === 0) {
+            if (record.data.Status === 5 || record.data.Enable === false) {
                 return "";
             }
             retval = retval + '></div>';
@@ -197,11 +195,9 @@
 
         };
 
-
         var setApprove = function (record) {
             Ext.net.DirectMethods.ExecuteApprove(record.get("ID"), {
                 success: function (result) {
-                    //Ext.msg.alert(result);
                     Ext.Msg.alert("tip", "Save Success");
                 },
                 failure: function (errorMsg) {

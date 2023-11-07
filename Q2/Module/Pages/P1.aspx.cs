@@ -10,7 +10,6 @@ namespace Q2.Web.UI
 {
     public partial class P1 : PageBase
     {
-        //private readonly SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MSSQL_DBconnect"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!X.IsAjaxRequest)
@@ -39,7 +38,7 @@ namespace Q2.Web.UI
             List<ApprovedOrder> ar = new List<ApprovedOrder>();
             using (Q2.Lib.OrderContext order = new Q2.Lib.OrderContext())
             {
-                MainStore.DataSource = order.GetCustEnable();
+                MainStore.DataSource = order.GetApproveOrder();
                 MainStore.DataBind();
             }
             using (Q2.Lib.CustomerContext customer = new CustomerContext())
@@ -105,8 +104,6 @@ namespace Q2.Web.UI
 
         protected void SubmitBtnClick(object sender, DirectEventArgs e)
         {
-            StringBuilder result = new StringBuilder();
-            string ids = string.Empty;
             RowSelectionModel sm = this.MainGrid.GetSelectionModel() as RowSelectionModel;
             if (sm.SelectedRows.Count == 0)
             {
