@@ -29,7 +29,6 @@ namespace Q2.Web.UI
                 var approvedDate = DateTime.Now;
                 success = mgr.SetApprove(ID, approvedDate);
             }           
-            this.loadData();
             return success;
         }
 
@@ -73,7 +72,6 @@ namespace Q2.Web.UI
                 //    MainStore.DataBind();
                 //}
         }
-        
       
         protected void SaveCust(object sender, DirectEventArgs e)
         {
@@ -88,6 +86,7 @@ namespace Q2.Web.UI
                 else
                     e.Success = UpdateEnable(m.ID, m.Enable);
             }
+            this.loadData();
         }
 
         private bool UpdateEnable(string id, bool enable)
@@ -121,6 +120,7 @@ namespace Q2.Web.UI
             {
                 e.ErrorMessage = "Approved Failure";
             }
+            this.loadData();
         }
     }
 }
